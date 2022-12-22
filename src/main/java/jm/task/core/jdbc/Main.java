@@ -11,17 +11,16 @@ public class Main {
         UserServiceImpl userServiceImpl = new UserServiceImpl();
         userServiceImpl.createUsersTable();
 
-        userServiceImpl.saveUser("First", "LastFirst", (byte) 18);
-        userServiceImpl.saveUser("Second", "LastSecond", (byte) 20);
-        userServiceImpl.saveUser("Last", "LastLast", (byte) 22);
-        userServiceImpl.saveUser("AndOne", "More", (byte) 25);
+        //userServiceImpl.saveUser("First", "LastFirst", (byte) 18);
+        //userServiceImpl.saveUser("Second", "LastSecond", (byte) 20);
+        //userServiceImpl.saveUser("Last", "LastLast", (byte) 22);
+        //userServiceImpl.saveUser("AndOne", "More", (byte) 25);
 
-        userServiceImpl.removeUserById(2);
+        //userServiceImpl.removeUserById(1);
 
-        List<User> users = userServiceImpl.getAllUsers();
-        System.out.println(users.toString());
+        //userServiceImpl.getAllUsers();
 
-        userServiceImpl.cleanUsersTable();
-        userServiceImpl.dropUsersTable();
+        //userServiceImpl.cleanUsersTable();
+        //userServiceImpl.dropUsersTable();
     }
 }

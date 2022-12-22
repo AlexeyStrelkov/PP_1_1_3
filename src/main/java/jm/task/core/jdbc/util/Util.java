@@ -1,9 +1,16 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class Util {
     // реализуйте настройку соеденения с БД
@@ -11,17 +18,40 @@ public class Util {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     public static Connection connection;
+    private static SessionFactory factory;
 
 
-    static {
+    public static Connection getConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println(connection.isClosed());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return connection;
     }
 
-    public static Connection getConnection() {
-        return connection;
+    public static SessionFactory getSessionFactory() {
+        if (factory == null) {
+            try {
+                Configuration config = new Configuration()
+                        .setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver")
+                        .setProperty(Environment.URL, URL)
+                        .setProperty(Environment.USER, USER)
+                        .setProperty(Environment.PASS, PASSWORD)
+                        .setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect")
+                        .setProperty(Environment.SHOW_SQL, "true")
+                        .setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread")
+                        .setProperty(Environment.HBM2DDL_AUTO, "update")
+                        .addAnnotatedClass(User.class);
+
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(config.getProperties()).build();
+                factory = config.buildSessionFactory(serviceRegistry);
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+        }
+        return factory;
     }
 }

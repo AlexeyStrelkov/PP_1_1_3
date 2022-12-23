@@ -21,15 +21,15 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS users" +
-                    "(id BIGINT AUTO_INCREMENT" +
-                    ", name VARCHAR(40)" +
-                    ", lastName VARCHAR(40)" +
-                    ", age TINYINT UNSIGNED" +
-                    ", PRIMARY KEY(id) )")
+                            "(id BIGINT NOT NULL AUTO_INCREMENT" +
+                            ", name VARCHAR(40)" +
+                            ", lastName VARCHAR(40)" +
+                            ", age TINYINT UNSIGNED" +
+                            ", PRIMARY KEY(id) )")
                     .executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            System.out.println("Create table error");
             session.getTransaction().rollback();
         }
     }
@@ -42,7 +42,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     .executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            System.out.println("Drop table error");
             session.getTransaction().rollback();
         }
     }
@@ -54,7 +54,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.save(new User(name, lastName, age));
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            System.out.println("Save user error");
             session.getTransaction().rollback();
         }
         System.out.println("User c именем - " + name + " добавлен в базу данных.");
@@ -67,8 +67,8 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(session.get(User.class, id));
             session.getTransaction().commit();
         } catch (HibernateException e) {
-        e.printStackTrace();
-        session.getTransaction().rollback();
+            System.out.println("Remove user error");
+            session.getTransaction().rollback();
         }
     }
 
@@ -78,11 +78,11 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = Util.getSessionFactory().openSession()) {
             session.beginTransaction();
             users = session.createSQLQuery("SELECT * FROM users")
-                            .addEntity(User.class).list();
+                    .addEntity(User.class).list();
             System.out.println(users);
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            System.out.println("Get users error");
             session.getTransaction().rollback();
         }
         return null;
@@ -96,7 +96,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     .executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            System.out.println("Clean table error");
             session.getTransaction().rollback();
         }
     }

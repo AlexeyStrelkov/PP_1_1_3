@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,10 +40,7 @@ public class Util {
                         .setProperty(Environment.URL, URL)
                         .setProperty(Environment.USER, USER)
                         .setProperty(Environment.PASS, PASSWORD)
-                        .setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect")
-                        .setProperty(Environment.SHOW_SQL, "true")
-                        .setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread")
-                        .setProperty(Environment.HBM2DDL_AUTO, "update")
+                        .setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect")
                         .addAnnotatedClass(User.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

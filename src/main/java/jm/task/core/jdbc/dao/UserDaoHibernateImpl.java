@@ -85,7 +85,7 @@ public class UserDaoHibernateImpl implements UserDao {
             System.out.println("Get users error");
             session.getTransaction().rollback();
         }
-        return null;
+        return users;
     }
 
     @Override

@@ -50,7 +50,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 exc.printStackTrace();
             }
             System.out.println("Drop table error");
-            ;
         }
     }
 
@@ -70,7 +69,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 exc.printStackTrace();
             }
             System.out.println("Add user error");
-            ;
         }
         System.out.println("User c именем - " + name + " добавлен в базу данных.");
     }
@@ -89,7 +87,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 exc.printStackTrace();
             }
             System.out.println("Remove user error");
-            ;
         }
     }
 
@@ -110,7 +107,6 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
             System.out.println("Select users error");
-            ;
         }
         return users;
     }
